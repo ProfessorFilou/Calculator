@@ -37,121 +37,153 @@
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            padding: 20px;
+            padding: 18px;
         }
 
         .card {
             width: 100%;
             max-width: 450px;
             background: var(--card-bg);
-            backdrop-filter: blur(12px);
+            backdrop-filter: blur(14px);
             border: 1px solid rgba(226, 232, 240, 0.95);
             border-radius: 34px;
-            padding: 34px 28px 28px 28px;
+            padding: 32px 26px 26px 26px;
             box-shadow: 0 28px 60px -15px var(--accent-glow), 0 6px 20px -4px rgba(15, 23, 42, 0.05);
             animation: cardEntrance 0.55s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            overflow: hidden;
         }
 
-        .top-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 16px;
-        }
-
-        .brand-pill {
-            display: inline-flex;
-            align-items: center;
-            gap: 9px;
-            background: var(--accent-light);
-            padding: 7px 15px;
-            border-radius: 999px;
-        }
-
-        .brand-dot {
-            width: 8px;
-            height: 8px;
-            background-color: var(--accent);
-            border-radius: 50%;
-            animation: pulseDot 2.2s infinite ease-in-out;
-        }
-
-        .brand-name {
-            font-weight: 700;
-            font-size: 0.88rem;
-            color: var(--text-main);
-        }
-
+        .top-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; }
+        .brand-pill { display: inline-flex; align-items: center; gap: 9px; background: var(--accent-light); padding: 7px 15px; border-radius: 999px; }
+        .brand-dot { width: 8px; height: 8px; background-color: var(--accent); border-radius: 50%; animation: pulseDot 2.2s infinite ease-in-out; }
+        .brand-name { font-weight: 700; font-size: 0.88rem; color: var(--text-main); }
         .brand-name span { color: var(--accent); }
 
-        .history-btn {
-            background: var(--surface-color);
-            border: 1px solid var(--border-color);
-            color: var(--text-muted);
-            padding: 7px 13px;
-            border-radius: 999px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
+        .history-btn { background: var(--surface-color); border: 1px solid var(--border-color); color: var(--text-muted); padding: 7px 13px; border-radius: 999px; font-size: 0.8rem; font-weight: 600; cursor: pointer; transition: all 0.2s ease; }
+        .history-btn:hover { background: var(--accent-light); color: var(--accent); }
 
-        .history-btn:hover {
-            background: var(--accent-light);
-            color: var(--accent);
-        }
-
-        h1 { font-size: 1.48rem; font-weight: 800; margin-bottom: 4px; letter-spacing: -0.025em; }
-        p.subtitle { color: var(--text-muted); font-size: 0.88rem; margin-bottom: 18px; }
+        h1 { font-size: 1.46rem; font-weight: 800; margin-bottom: 4px; letter-spacing: -0.025em; }
+        p.subtitle { color: var(--text-muted); font-size: 0.87rem; margin-bottom: 16px; }
         .control-bar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; gap: 8px; }
         .pill-toggle { display: inline-flex; background: var(--surface-color); border: 1px solid var(--border-color); border-radius: 999px; padding: 3px; }
         .pill-toggle button { border: none; background: transparent; padding: 6px 12px; border-radius: 999px; font-size: 0.77rem; font-weight: 600; color: var(--text-muted); cursor: pointer; transition: all 0.22s ease; }
         .pill-toggle button.active { background: var(--accent); color: #ffffff; box-shadow: 0 3px 10px rgba(37, 99, 235, 0.32); }
-        .btn-copy { border: none; background: var(--accent-light); color: var(--accent); padding: 7px 14px; border-radius: 999px; font-size: 0.77rem; font-weight: 600; cursor: pointer; }
+        .btn-copy { border: none; background: var(--accent-light); color: var(--accent); padding: 7px 14px; border-radius: 999px; font-size: 0.77rem; font-weight: 600; cursor: pointer; transition: all 0.2s ease; }
         .btn-copy:hover { background: var(--accent-mid); }
 
+        /* Display: Verhindert jedes Überlaufen über den Rand */
         .display-box {
             background: linear-gradient(180deg, #f8fafc 0%, #f1f5f9 100%);
             border: 1.5px solid var(--border-color);
             border-radius: 24px;
-            padding: 16px 20px;
+            padding: 15px 18px;
             margin-bottom: 16px;
-            min-height: 132px;
+            min-height: 134px;
+            width: 100%;
+            overflow: hidden;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
+            box-shadow: inset 0 2px 6px rgba(15, 23, 42, 0.03);
         }
 
-        .expression-visual { display: flex; flex-wrap: wrap; align-items: center; justify-content: flex-end; gap: 5px; min-height: 36px; font-size: 1.02rem; color: var(--text-muted); font-weight: 600; }
-        .mini-frac { display: inline-flex; flex-direction: column; align-items: center; font-size: 0.78rem; line-height: 1.05; color: var(--text-main); background: #ffffff; padding: 2px 6px; border-radius: 8px; border: 1px solid var(--border-color); }
+        .expression-scroll {
+            width: 100%;
+            overflow-x: auto;
+            overflow-y: hidden;
+            scrollbar-width: none;
+            display: flex;
+            justify-content: flex-end;
+        }
+        .expression-scroll::-webkit-scrollbar { display: none; }
+
+        .expression-visual {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            min-height: 36px;
+            font-size: 1rem;
+            color: var(--text-muted);
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        .mini-frac { display: inline-flex; flex-direction: column; align-items: center; font-size: 0.76rem; line-height: 1.05; color: var(--text-main); background: #ffffff; padding: 2px 6px; border-radius: 8px; border: 1px solid var(--border-color); }
         .mini-frac span:first-child { border-bottom: 1.5px solid var(--text-muted); padding-bottom: 1px; }
 
-        .result-line { display: flex; align-items: center; justify-content: flex-end; gap: 12px; margin-top: 8px; min-height: 56px; }
+        .result-scroll {
+            width: 100%;
+            overflow-x: auto;
+            overflow-y: hidden;
+            scrollbar-width: none;
+            margin-top: 8px;
+        }
+        .result-scroll::-webkit-scrollbar { display: none; }
+
+        .result-line {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 10px;
+            min-height: 56px;
+            white-space: nowrap;
+            animation: resultPop 0.24s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
         .fraction { display: inline-flex; flex-direction: column; align-items: center; font-weight: 800; color: var(--accent); line-height: 1.08; }
-        .fraction .num { padding: 0 8px 3px 8px; border-bottom: 2.5px solid var(--accent); font-size: 1.25rem; }
-        .fraction .den { padding: 3px 8px 0 8px; font-size: 1.25rem; }
-        .mixed-whole { font-size: 1.8rem; font-weight: 800; color: var(--accent); margin-right: 4px; }
-        .decimal-badge { font-size: 1.05rem; font-weight: 700; color: var(--text-muted); background: #ffffff; border: 1px solid var(--border-color); padding: 6px 13px; border-radius: 999px; }
-        .main-number { font-size: 2.05rem; font-weight: 800; color: var(--text-main); letter-spacing: -0.025em; }
+        .fraction .num { padding: 0 7px 3px 7px; border-bottom: 2.5px solid var(--accent); font-size: 1.2rem; }
+        .fraction .den { padding: 3px 7px 0 7px; font-size: 1.2rem; }
+        .mixed-whole { font-size: 1.75rem; font-weight: 800; color: var(--accent); margin-right: 4px; }
+        .decimal-badge { font-size: 0.98rem; font-weight: 700; color: var(--text-muted); background: #ffffff; border: 1px solid var(--border-color); padding: 5px 12px; border-radius: 999px; flex-shrink: 0; }
+        .main-number { font-size: 2rem; font-weight: 800; color: var(--text-main); letter-spacing: -0.025em; transition: font-size 0.15s ease; }
 
-        .history-panel { display: none; background: var(--surface-color); border: 1px solid var(--border-color); border-radius: 20px; padding: 12px 14px; margin-bottom: 16px; max-height: 150px; overflow-y: auto; }
-        .history-panel.open { display: block; }
-        .history-item { display: flex; justify-content: space-between; align-items: center; padding: 7px 10px; border-radius: 12px; font-size: 0.84rem; cursor: pointer; }
+        .history-panel { display: none; background: var(--surface-color); border: 1px solid var(--border-color); border-radius: 20px; padding: 10px 12px; margin-bottom: 14px; max-height: 140px; overflow-y: auto; }
+        .history-panel.open { display: block; animation: resultPop 0.25s ease; }
+        .history-item { display: flex; justify-content: space-between; align-items: center; gap: 10px; padding: 7px 10px; border-radius: 12px; font-size: 0.83rem; cursor: pointer; }
+        .history-item span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
         .history-item:hover { background: #ffffff; }
-        .history-item strong { color: var(--accent); }
+        .history-item strong { color: var(--accent); flex-shrink: 0; }
 
+        /* Tasten & Tippanimationen */
         .keypad { display: grid; grid-template-columns: repeat(4, 1fr); gap: 9px; }
-        .key { padding: 14px 8px; border: 1.5px solid var(--border-color); border-radius: 18px; background: #ffffff; color: var(--text-main); font-size: 1.08rem; font-weight: 700; cursor: pointer; transition: all 0.16s ease; user-select: none; }
-        .key:hover { background: var(--surface-color); transform: translateY(-2px); }
-        .key:active { transform: scale(0.95); }
+        .key {
+            position: relative;
+            overflow: hidden;
+            padding: 14px 6px;
+            border: 1.5px solid var(--border-color);
+            border-radius: 18px;
+            background: #ffffff;
+            color: var(--text-main);
+            font-size: 1.08rem;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(15, 23, 42, 0.02);
+            transition: transform 0.14s cubic-bezier(0.34, 1.56, 0.64, 1), background-color 0.15s ease, box-shadow 0.15s ease;
+            user-select: none;
+        }
+        .key:hover { background: var(--surface-color); transform: translateY(-2px); box-shadow: 0 6px 14px -4px rgba(15, 23, 42, 0.07); }
+        .key:active, .key.pressed { transform: scale(0.91) !important; background: var(--accent-mid) !important; box-shadow: inset 0 2px 5px rgba(37, 99, 235, 0.18); }
+
+        .ripple {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(37, 99, 235, 0.22);
+            transform: scale(0);
+            animation: rippleAnim 0.48s ease-out;
+            pointer-events: none;
+        }
+
         .key-op { background: var(--accent-light); border-color: transparent; color: var(--accent); font-size: 1.22rem; }
-        .key-func { background: var(--surface-color); border-color: transparent; font-size: 0.92rem; }
+        .key-func { background: var(--surface-color); border-color: transparent; font-size: 0.9rem; }
         .key-clear { background: #fef2f2; border-color: transparent; color: var(--danger); }
         .key-equals { background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%); border: none; color: #ffffff; border-radius: 999px; font-size: 1.3rem; box-shadow: 0 10px 22px -6px rgba(37, 99, 235, 0.45); }
-        .hint-bar { margin-top: 14px; text-align: center; font-size: 0.76rem; color: var(--text-muted); }
+        .key-equals:active, .key-equals.pressed { background: linear-gradient(135deg, #1d4ed8 0%, #1e40af 100%) !important; color: #ffffff !important; }
+        .hint-bar { margin-top: 13px; text-align: center; font-size: 0.75rem; color: var(--text-muted); }
 
         @keyframes pulseDot { 0%, 100% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.35); opacity: 0.65; } }
         @keyframes cardEntrance { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes resultPop { from { opacity: 0.4; transform: translateY(4px) scale(0.98); } to { opacity: 1; transform: translateY(0) scale(1); } }
+        @keyframes rippleAnim { to { transform: scale(3.5); opacity: 0; } }
     </style>
 </head>
 <body>
@@ -181,48 +213,52 @@
     </div>
 
     <div class="display-box">
-        <div class="expression-visual" id="expression-display">0</div>
-        <div class="result-line" id="result-display"><span class="main-number">0</span></div>
+        <div class="expression-scroll" id="expr-scroll">
+            <div class="expression-visual" id="expression-display">0</div>
+        </div>
+        <div class="result-scroll" id="res-scroll">
+            <div class="result-line" id="result-display"><span class="main-number">0</span></div>
+        </div>
     </div>
 
     <div class="keypad">
-        <button class="key key-clear" onclick="clearAll()">AC</button>
-        <button class="key key-func" onclick="backspace()">⌫</button>
-        <button class="key key-func" onclick="appendToken(' ')">Ganzzahl ␣</button>
-        <button class="key key-op" onclick="appendToken('/')">a⁄b</button>
+        <button class="key key-clear" data-key="Escape" onclick="clearAll()">AC</button>
+        <button class="key key-func" data-key="Backspace" onclick="backspace()">⌫</button>
+        <button class="key key-func" data-key=" " onclick="appendToken(' ')">Ganzzahl ␣</button>
+        <button class="key key-op" data-key="/" onclick="appendToken('/')">a⁄b</button>
 
-        <button class="key key-func" onclick="toggleParens()">( )</button>
+        <button class="key key-func" data-key="(" onclick="toggleParens()">( )</button>
         <button class="key key-func" onclick="invertFraction()">1/x</button>
         <button class="key key-func" onclick="squareFraction()">x²</button>
-        <button class="key key-op" onclick="appendToken(' ÷ ')">÷</button>
+        <button class="key key-op" data-key="÷" onclick="appendToken(' ÷ ')">÷</button>
 
-        <button class="key" onclick="appendToken('7')">7</button>
-        <button class="key" onclick="appendToken('8')">8</button>
-        <button class="key" onclick="appendToken('9')">9</button>
-        <button class="key key-op" onclick="appendToken(' × ')">×</button>
+        <button class="key" data-key="7" onclick="appendToken('7')">7</button>
+        <button class="key" data-key="8" onclick="appendToken('8')">8</button>
+        <button class="key" data-key="9" onclick="appendToken('9')">9</button>
+        <button class="key key-op" data-key="*" onclick="appendToken(' × ')">×</button>
 
-        <button class="key" onclick="appendToken('4')">4</button>
-        <button class="key" onclick="appendToken('5')">5</button>
-        <button class="key" onclick="appendToken('6')">6</button>
-        <button class="key key-op" onclick="appendToken(' - ')">−</button>
+        <button class="key" data-key="4" onclick="appendToken('4')">4</button>
+        <button class="key" data-key="5" onclick="appendToken('5')">5</button>
+        <button class="key" data-key="6" onclick="appendToken('6')">6</button>
+        <button class="key key-op" data-key="-" onclick="appendToken(' - ')">−</button>
 
-        <button class="key" onclick="appendToken('1')">1</button>
-        <button class="key" onclick="appendToken('2')">2</button>
-        <button class="key" onclick="appendToken('3')">3</button>
-        <button class="key key-op" onclick="appendToken(' + ')">+</button>
+        <button class="key" data-key="1" onclick="appendToken('1')">1</button>
+        <button class="key" data-key="2" onclick="appendToken('2')">2</button>
+        <button class="key" data-key="3" onclick="appendToken('3')">3</button>
+        <button class="key key-op" data-key="+" onclick="appendToken(' + ')">+</button>
 
-        <button class="key key-func" onclick="applyPercent()">%</button>
-        <button class="key" onclick="appendToken('0')">0</button>
-        <button class="key" onclick="appendToken(',')">,</button>
-        <button class="key key-equals" onclick="calculate()">=</button>
+        <button class="key key-func" data-key="%" onclick="applyPercent()">%</button>
+        <button class="key" data-key="0" onclick="appendToken('0')">0</button>
+        <button class="key" data-key="," onclick="appendToken(',')">,</button>
+        <button class="key key-equals" data-key="Enter" onclick="calculate()">=</button>
     </div>
 
     <p class="hint-bar">Gemischter Bruch z. B. <strong>1 ½</strong>: <code>1</code> → <code>Ganzzahl ␣</code> → <code>1</code> → <code>a⁄b</code> → <code>2</code></p>
 </div>
-
 <script>
     let expression = '', displayMode = 'improper', lastResult = null, openParens = 0, historyList = [];
     const exprEl = document.getElementById('expression-display'), resEl = document.getElementById('result-display');
+    const exprScroll = document.getElementById('expr-scroll'), resScroll = document.getElementById('res-scroll');
 
     function gcd(a, b) {
         a = a < 0n ? -a : a; b = b < 0n ? -b : b;
@@ -241,8 +277,8 @@
             str = str.trim().replace(',', '.');
             if (/^-?\d+\s+\d+\/\d+$/.test(str)) {
                 const parts = str.split(/\s+/);
-                const whole = BigInt(parts[0]);
-                const [n, d] = parts[1].split('/').map(BigInt);
+                const whole = BigInt(parts);
+                const [n, d] = parts.split('/').map(BigInt);
                 if (d === 0n) throw new Error('Division durch Null');
                 const sign = whole < 0n ? -1n : 1n;
                 return new Fraction(sign * ((whole < 0n ? -whole : whole) * d + n), d);
@@ -259,7 +295,11 @@
         sub(o) { return new Fraction(this.num * o.den - o.num * this.den, this.den * o.den); }
         mul(o) { return new Fraction(this.num * o.num, this.den * o.den); }
         div(o) { if (o.num === 0n) throw new Error('Division durch Null'); return new Fraction(this.num * o.den, this.den * o.num); }
-        toDecimalString() { const val = Number(this.num) / Number(this.den); return Number.isInteger(val) ? val.toString() : parseFloat(val.toFixed(6)).toString().replace('.', ','); }
+        toDecimalString() {
+            const val = Number(this.num) / Number(this.den);
+            if (!Number.isFinite(val)) return '∞';
+            return Number.isInteger(val) ? val.toString() : parseFloat(val.toFixed(6)).toString().replace('.', ',');
+        }
         toPlainText() {
             if (this.den === 1n) return this.num.toString();
             if (displayMode === 'mixed' && (this.num > this.den || this.num < -this.den)) {
@@ -267,42 +307,6 @@
             }
             return `${this.num}/${this.den}`;
         }
-    }
-    function formatVisualExpression(raw) {
-        return raw ? raw.replace(/(\d+)\/(\d+)/g, (_, n, d) => `<span class="mini-frac"><span>${n}</span><span>${d}</span></span>`) : '0';
-    }
-
-    function setDisplayMode(mode) {
-        displayMode = mode;
-        document.getElementById('mode-improper').classList.toggle('active', mode === 'improper');
-        document.getElementById('mode-mixed').classList.toggle('active', mode === 'mixed');
-        if (lastResult) renderResult(lastResult);
-    }
-
-    function appendToken(token) { expression += token; updateDisplay(); }
-
-    function toggleParens() {
-        if (openParens > 0 && /[\d)]$/.test(expression.trim())) { expression += ')'; openParens--; }
-        else { expression += '('; openParens++; }
-        updateDisplay();
-    }
-
-    function backspace() {
-        if (expression.endsWith(' + ') || expression.endsWith(' - ') || expression.endsWith(' × ') || expression.endsWith(' ÷ ')) expression = expression.slice(0, -3);
-        else {
-            const removed = expression.slice(-1);
-            if (removed === '(') openParens = Math.max(0, openParens - 1);
-            if (removed === ')') openParens++;
-            expression = expression.slice(0, -1);
-        }
-        updateDisplay();
-    }
-
-    function clearAll() { expression = ''; lastResult = null; openParens = 0; exprEl.innerHTML = '0'; resEl.innerHTML = '<span class="main-number">0</span>'; }
-
-    function updateDisplay() {
-        exprEl.innerHTML = formatVisualExpression(expression);
-        try { if (expression.trim()) { lastResult = evaluateExpression(expression); renderResult(lastResult); } } catch (e) {}
     }
 
     function evaluateExpression(expr) {
@@ -336,13 +340,72 @@
         }
         return parseExpression();
     }
+    function formatVisualExpression(raw) {
+        return raw ? raw.replace(/(\d+)\/(\d+)/g, (_, n, d) => `<span class="mini-frac"><span>${n}</span><span>${d}</span></span>`) : '0';
+    }
+
+    function getDynamicFontSize(len) {
+        if (len > 22) return '1.15rem';
+        if (len > 16) return '1.38rem';
+        if (len > 11) return '1.68rem';
+        return '2rem';
+    }
+
+    function setDisplayMode(mode) {
+        displayMode = mode;
+        document.getElementById('mode-improper').classList.toggle('active', mode === 'improper');
+        document.getElementById('mode-mixed').classList.toggle('active', mode === 'mixed');
+        if (lastResult) renderResult(lastResult);
+    }
+
+    function appendToken(token) { expression += token; updateDisplay(); }
+
+    function toggleParens() {
+        if (openParens > 0 && /[\d)]$/.test(expression.trim())) { expression += ')'; openParens--; }
+        else { expression += '('; openParens++; }
+        updateDisplay();
+    }
+
+    function backspace() {
+        if (expression.endsWith(' + ') || expression.endsWith(' - ') || expression.endsWith(' × ') || expression.endsWith(' ÷ ')) expression = expression.slice(0, -3);
+        else {
+            const removed = expression.slice(-1);
+            if (removed === '(') openParens = Math.max(0, openParens - 1);
+            if (removed === ')') openParens++;
+            expression = expression.slice(0, -1);
+        }
+        updateDisplay();
+    }
+
+    function clearAll() {
+        expression = ''; lastResult = null; openParens = 0;
+        exprEl.innerHTML = '0';
+        resEl.innerHTML = '<span class="main-number">0</span>';
+    }
+
+    function updateDisplay() {
+        exprEl.innerHTML = formatVisualExpression(expression);
+        exprScroll.scrollLeft = exprScroll.scrollWidth;
+        try { if (expression.trim()) { lastResult = evaluateExpression(expression); renderResult(lastResult); } } catch (e) {}
+    }
 
     function renderResult(frac) {
-        if (frac.den === 1n) { resEl.innerHTML = `<span class="main-number">${frac.num.toString()}</span>`; return; }
-        let fractionHtml = (displayMode === 'mixed' && (frac.num > frac.den || frac.num < -frac.den))
-            ? `<div style="display:flex; align-items:center;"><span class="mixed-whole">${frac.num / frac.den}</span><span class="fraction"><span class="num">${(frac.num < 0n ? -frac.num : frac.num) % frac.den}</span><span class="den">${frac.den}</span></span></div>`
-            : `<span class="fraction"><span class="num">${frac.num}</span><span class="den">${frac.den}</span></span>`;
-        resEl.innerHTML = `${fractionHtml}<span class="decimal-badge">≈ ${frac.toDecimalString()}</span>`;
+        resEl.style.animation = 'none';
+        void resEl.offsetWidth;
+        resEl.style.animation = '';
+
+        if (frac.den === 1n) {
+            const str = frac.num.toString();
+            resEl.innerHTML = `<span class="main-number" style="font-size:${getDynamicFontSize(str.length)}">${str}</span>`;
+        } else {
+            const numLen = Math.max(frac.num.toString().length, frac.den.toString().length);
+            const fSize = numLen > 10 ? '0.95rem' : numLen > 6 ? '1.08rem' : '1.2rem';
+            let fractionHtml = (displayMode === 'mixed' && (frac.num > frac.den || frac.num < -frac.den))
+                ? `<div style="display:flex; align-items:center;"><span class="mixed-whole" style="font-size:${numLen > 6 ? '1.35rem' : '1.75rem'}">${frac.num / frac.den}</span><span class="fraction"><span class="num" style="font-size:${fSize}">${(frac.num < 0n ? -frac.num : frac.num) % frac.den}</span><span class="den" style="font-size:${fSize}">${frac.den}</span></span></div>`
+                : `<span class="fraction"><span class="num" style="font-size:${fSize}">${frac.num}</span><span class="den" style="font-size:${fSize}">${frac.den}</span></span>`;
+            resEl.innerHTML = `${fractionHtml}<span class="decimal-badge">≈ ${frac.toDecimalString()}</span>`;
+        }
+        resScroll.scrollLeft = resScroll.scrollWidth;
     }
 
     function addToHistory(expr, resText) {
@@ -362,7 +425,7 @@
             const resText = res.toPlainText(); addToHistory(expression, resText);
             exprEl.innerHTML = formatVisualExpression(expression) + ' =';
             renderResult(res); expression = resText; openParens = 0;
-        } catch (err) { resEl.innerHTML = `<span class="main-number" style="color:var(--danger); font-size:1.25rem;">${err.message || 'Fehler'}</span>`; }
+        } catch (err) { resEl.innerHTML = `<span class="main-number" style="color:var(--danger); font-size:1.2rem;">${err.message || 'Fehler'}</span>`; }
     }
 
     function invertFraction() { calculate(); if (lastResult && lastResult.num !== 0n) { lastResult = new Fraction(lastResult.den, lastResult.num); expression = lastResult.toPlainText(); exprEl.textContent = 'Kehrwert'; renderResult(lastResult); } }
@@ -377,7 +440,27 @@
         setTimeout(() => { btn.textContent = orig; btn.style.backgroundColor = ''; btn.style.color = ''; }, 1800);
     }
 
+    // Ripple-Effekt auf allen Tasten
+    document.querySelectorAll('.key').forEach(btn => {
+        btn.addEventListener('pointerdown', function(e) {
+            const circle = document.createElement('span');
+            const d = Math.max(this.clientWidth, this.clientHeight);
+            const rect = this.getBoundingClientRect();
+            circle.style.width = circle.style.height = `${d}px`;
+            circle.style.left = `${e.clientX - rect.left - d / 2}px`;
+            circle.style.top = `${e.clientY - rect.top - d / 2}px`;
+            circle.classList.add('ripple');
+            this.appendChild(circle);
+            setTimeout(() => circle.remove(), 500);
+        });
+    });
+
+    // Tastatur inkl. visuellem Tastendruck
     document.addEventListener('keydown', (e) => {
+        const keyMap = e.key === '=' ? 'Enter' : e.key === '.' ? ',' : e.key === ')' ? '(' : e.key;
+        const visualBtn = document.querySelector(`.key[data-key="${keyMap}"]`);
+        if (visualBtn) { visualBtn.classList.add('pressed'); setTimeout(() => visualBtn.classList.remove('pressed'), 140); }
+
         if (e.key >= '0' && e.key <= '9') appendToken(e.key);
         else if (e.key === ',' || e.key === '.') appendToken(',');
         else if (e.key === '+') appendToken(' + ');
