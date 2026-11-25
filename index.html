@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ProfessorFilou.de – Bruch- & Taschenrechner</title>
+    <style>
+        :root {
+            --bg-gradient-start: #ffffff;
+            --bg-gradient-end: #eff6ff;
+            --card-bg: #ffffff;
+            --surface-color: #f8fafc;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --accent: #2563eb;
+            --accent-hover: #1d4ed8;
+            --accent-light: #eff6ff;
+            --accent-glow: rgba(37, 99, 235, 0.15);
+            --border-color: #e2e8f0;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background: radial-gradient(circle at top right, #dbeafe 0%, var(--bg-gradient-start) 45%, var(--bg-gradient-end) 100%);
+            color: var(--text-main);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .card {
+            width: 100%;
+            max-width: 440px;
+            background: var(--card-bg);
+            border: 1px solid rgba(226, 232, 240, 0.9);
+            border-radius: 32px;
+            padding: 36px 30px;
+            box-shadow: 0 24px 50px -12px var(--accent-glow), 0 4px 18px -4px rgba(15, 23, 42, 0.04);
+            animation: cardEntrance 0.55s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        .brand-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--accent-light);
+            padding: 8px 16px;
+            border-radius: 999px;
+            margin-bottom: 18px;
+        }
+
+        .brand-dot {
+            width: 9px;
+            height: 9px;
+            background-color: var(--accent);
+            border-radius: 50%;
+            animation: pulseDot 2.2s infinite ease-in-out;
+        }
+
+        .brand-name {
+            font-weight: 700;
+            font-size: 0.92rem;
+            letter-spacing: -0.01em;
+            color: var(--text-main);
+        }
+
+        .brand-name span {
+            color: var(--accent);
+        }
+
+        h1 {
+            font-size: 1.52rem;
+            font-weight: 800;
+            margin-bottom: 6px;
+            letter-spacing: -0.025em;
+            line-height: 1.25;
+        }
+
+        p.subtitle {
+            color: var(--text-muted);
+            font-size: 0.92rem;
+            line-height: 1.5;
+            margin-bottom: 22px;
+        }
+
+        .display-box {
+            background: var(--surface-color);
+            border: 1.5px solid var(--border-color);
+            border-radius: 22px;
+            padding: 18px 20px;
+            margin-bottom: 18px;
+            min-height: 118px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: all 0.25s ease;
+        }
+
+        .display-box:focus-within {
+            background: #ffffff;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 4px var(--accent-light);
+        }
+
+        .expression-line {
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            min-height: 22px;
+            word-break: break-all;
+            text-align: right;
+            font-weight: 500;
+        }
+
+        .result-line {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            gap: 14px;
+            margin-top: 8px;
+            min-height: 52px;
+        }
+
+        .fraction {
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            vertical-align: middle;
+            font-weight: 800;
+            color: var(--accent);
+            line-height: 1.1;
+        }
+
+        .fraction .num {
+            padding: 0 6px 3px 6px;
+            border-bottom: 2.5px solid var(--accent);
+            font-size: 1.15rem;
+        }
+
+        .fraction .den {
+            padding: 3px 6px 0 6px;
+            font-size: 1.15rem;
+        }
+
+        .mixed-whole {
+            font-size: 1.65rem;
+            font-weight: 800;
+            color: var(--accent);
+            margin-right: 4px;
+        }
+
+        .decimal-preview {
+            font-size: 1.15rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            background: #ffffff;
+            border: 1px solid var(--border-color);
+            padding: 5px 12px;
+            border-radius: 999px;
+        }
+
+        .main-number {
+            font-size: 1.85rem;
+            font-weight: 800;
+            color: var(--text-main);
+            letter-spacing: -0.02em;
+        }
+
+        .mode-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 14px;
+            gap: 8px;
+        }
+
+        .pill-toggle {
+            display: inline-flex;
+            background: var(--surface-color);
+            border: 1px solid var(--border-color);
+            border-radius: 999px;
+            padding: 3px;
+        }
+
+        .pill-toggle button {
+            border: none;
+            background: transparent;
+            padding: 6px 12px;
+            border-radius: 999px;
+            font-size: 0.78rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .pill-toggle button.active {
+            background: var(--accent);
+            color: #ffffff;
+            box-shadow: 0 2px 8px rgba(37, 99, 235, 0.3);
+        }
+
+        .btn-mini-copy {
+            border: none;
+            background: var(--accent-light);
+            color: var(--accent);
+            padding: 7px 13px;
+            border-radius: 999px;
+            font-size: 0.78rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .btn-mini-copy:hover {
+            background: #dbeafe;
+        }
+
+        .keypad {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+        }
+
+        .key {
+            padding: 15px 10px;
+            border: 1.5px solid var(--border-color);
+            border-radius: 18px;
+            background: var(--surface-color);
+            color: var(--text-main);
+            font-size: 1.08rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.18s cubic-bezier(0.16, 1, 0.3, 1);
+            user-select: none;
+        }
+
+        .key:hover {
+            background: #ffffff;
+            border-color: #cbd5e1;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 14px -4px rgba(15, 23, 42, 0.06);
+        }
+
+        .key:active {
+            transform: translateY(0) scale(0.96);
+        }
+
+        .key-op {
+            background: var(--accent-light);
+            border-color: transparent;
+            color: var(--accent);
+            font-size: 1.2rem;
+        }
+
+        .key-op:hover {
+            background: #dbeafe;
+            border-color: transparent;
+        }
+
+        .key-frac {
+            background: #f1f5f9;
+            color: var(--text-main);
+            font-size: 0.95rem;
+        }
+
+        .key-clear {
+            background: #fef2f2;
+            border-color: transparent;
+            color: #dc2626;
+        }
+
+        .key-clear:hover {
+            background: #fee2e2;
+            border-color: transparent;
+        }
+
+        .key-equals {
+            grid-column: span 2;
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            border: none;
+            color: #ffffff;
+            border-radius: 999px;
+            font-size: 1.25rem;
+            box-shadow: 0 10px 22px -6px rgba(37, 99, 235, 0.45);
+        }
+
+        .key-equals:hover {
+            background: linear-gradient(135deg, #2563eb 0%, #1d4ed8 100%);
+            box-shadow: 0 14px 28px -6px rgba(37, 99, 235, 0.55);
+        }
+
+        .hint-text {
+            margin-top: 16px;
+            text-align: center;
+            font-size: 0.78rem;
+            color: var(--text-muted);
+        }
+
+        @keyframes pulseDot {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.35); opacity: 0.65; }
+        }
+
+        @keyframes cardEntrance {
+            from { opacity: 0; transform: translateY(16px) scale(0.98); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+    </style>
+</head>
+<body>
+
+<div class="card">
+    <div class="brand-pill">
+        <div class="brand-dot"></div>
+        <div class="brand-name">Professor<span>Filou</span>.de</div>
+    </div>
+
+    <h1>Bruch- & Taschenrechner</h1>
+    <p class="subtitle">Rechne mit echten Brüchen, gemischten Zahlen und Dezimalwerten – automatisch gekürzt.</p>
+
+    <div class="mode-bar">
+        <div class="pill-toggle">
+            <button id="mode-improper" class="active" onclick="setDisplayMode('improper')">Bruch (a/b)</button>
+            <button id="mode-mixed" onclick="setDisplayMode('mixed')">Gemischt (1 a/b)</button>
+        </div>
+        <button class="btn-mini-copy" id="copy-res-btn" onclick="copyResult()">Ergebnis kopieren</button>
+    </div>
+
+    <div class="display-box">
+        <div class="expression-line" id="expression-display">0</div>
+        <div class="result-line" id="result-display">
+            <span class="main-number">0</span>
+        </div>
+    </div>
+
+    <div class="keypad">
+        <button class="key key-clear" onclick="clearAll()">AC</button>
+        <button class="key key-frac" onclick="backspace()">⌫</button>
+        <button class="key key-frac" onclick="appendToken(' ')" title="Leerzeichen für gemischte Brüche (z. B. 1 1/2)">Ganzzahl ␣</button>
+        <button class="key key-op" onclick="appendToken('/')">⁄ (Bruch)</button>
+
+        <button class="key" onclick="appendToken('7')">7</button>
+        <button class="key" onclick="appendToken('8')">8</button>
+        <button class="key" onclick="appendToken('9')">9</button>
+        <button class="key key-op" onclick="appendToken(' ÷ ')">÷</button>
+
+        <button class="key" onclick="appendToken('4')">4</button>
+        <button class="key" onclick="appendToken('5')">5</button>
+        <button class="key" onclick="appendToken('6')">6</button>
+        <button class="key key-op" onclick="appendToken(' × ')">×</button>
+
+        <button class="key" onclick="appendToken('1')">1</button>
+        <button class="key" onclick="appendToken('2')">2</button>
+        <button class="key" onclick="appendToken('3')">3</button>
+        <button class="key key-op" onclick="appendToken(' - ')">−</button>
+
+        <button class="key" onclick="appendToken('0')">0</button>
+        <button class="key" onclick="appendToken(',')">,</button>
+        <button class="key key-op" onclick="appendToken(' + ')">+</button>
+        <button class="key key-frac" onclick="toggleParens()">( )</button>
+
+        <button class="key key-frac" onclick="invertFraction()">1/x</button>
+        <button class="key key-frac" onclick="squareFraction()">x²</button>
+        <button class="key key-equals" onclick="calculate()">=</button>
+    </div>
+
+    <p class="hint-text">Tipp: Für <strong>1 ½</strong> tippe <code>1</code> → <code>Ganzzahl ␣</code> → <code>1</code> → <code>⁄</code> → <code>2</code>. Tastatur wird ebenfalls unterstützt!</p>
+</div>
+    function setDisplayMode(mode) {
+        displayMode = mode;
+        document.getElementById('mode-improper').classList.toggle('active', mode === 'improper');
+        document.getElementById('mode-mixed').classList.toggle('active', mode === 'mixed');
+        if (lastResult) renderResult(lastResult);
+    }
+
+    function appendToken(token) {
+        if (expression === 'Fehler') expression = '';
+        expression += token;
+        updateDisplay();
+    }
+
+    function toggleParens() {
+        if (openParens > 0 && /[\d)]$/.test(expression.trim())) {
+            expression += ')';
+            openParens--;
+        } else {
+            expression += '(';
+            openParens++;
+        }
+        updateDisplay();
+    }
+
+    function backspace() {
+        if (expression === 'Fehler') {
+            clearAll();
+            return;
+        }
+        if (expression.endsWith(' + ') || expression.endsWith(' - ') || expression.endsWith(' × ') || expression.endsWith(' ÷ ')) {
+            expression = expression.slice(0, -3);
+        } else {
+            const removed = expression.slice(-1);
+            if (removed === '(') openParens = Math.max(0, openParens - 1);
+            if (removed === ')') openParens++;
+            expression = expression.slice(0, -1);
+        }
+        updateDisplay();
+    }
+
+    function clearAll() {
+        expression = '';
+        lastResult = null;
+        openParens = 0;
+        exprEl.textContent = '0';
+        resEl.innerHTML = '<span class="main-number">0</span>';
+    }
+
+    function updateDisplay() {
+        exprEl.textContent = expression || '0';
+        try {
+            if (expression.trim()) {
+                const res = evaluateExpression(expression);
+                lastResult = res;
+                renderResult(res);
+            }
+        } catch (e) {}
+    }
+
+    function evaluateExpression(expr) {
+        let clean = expr.replace(/×/g, '*').replace(/÷/g, '/').trim();
+        for (let i = 0; i < openParens; i++) clean += ')';
+
+        const tokenRegex = /\d+\s+\d+\/\d+|\d+\/\d+|\d+(?:[.,]\d+)?|[+\-*/()]/g;
+        const tokens = clean.match(tokenRegex);
+        if (!tokens) throw new Error('Leer');
+
+        let pos = 0;
+
+        function parseExpression() {
+            let left = parseTerm();
+            while (pos < tokens.length && (tokens[pos] === '+' || tokens[pos] === '-')) {
+                const op = tokens[pos++];
+                const right = parseTerm();
+                left = op === '+' ? left.add(right) : left.sub(right);
+            }
+            return left;
+        }
+
+        function parseTerm() {
+            let left = parseFactor();
+            while (pos < tokens.length && (tokens[pos] === '*' || tokens[pos] === '/')) {
+                const op = tokens[pos++];
+                const right = parseFactor();
+                left = op === '*' ? left.mul(right) : left.div(right);
+            }
+            return left;
+        }
+
+        function parseFactor() {
+            const tok = tokens[pos];
+            if (tok === '-') {
+                pos++;
+                return new Fraction(0n).sub(parseFactor());
+            }
+            if (tok === '(') {
+                pos++;
+                const val = parseExpression();
+                if (tokens[pos] === ')') pos++;
+                return val;
+            }
+            pos++;
+            return Fraction.fromString(tok);
+        }
+
+        return parseExpression();
+    }
+
+    function renderResult(frac) {
+        if (frac.den === 1n) {
+            resEl.innerHTML = `<span class="main-number">${frac.num.toString()}</span>`;
+            return;
+        }
+
+        let fractionHtml = '';
+        if (displayMode === 'mixed' && (frac.num > frac.den || frac.num < -frac.den)) {
+            const whole = frac.num / frac.den;
+            const rem = (frac.num < 0n ? -frac.num : frac.num) % frac.den;
+            fractionHtml = `
+                <div style="display:flex; align-items:center;">
+                    <span class="mixed-whole">${whole}</span>
+                    <span class="fraction">
+                        <span class="num">${rem}</span>
+                        <span class="den">${frac.den}</span>
+                    </span>
+                </div>
+            `;
+        } else {
+            fractionHtml = `
+                <span class="fraction">
+                    <span class="num">${frac.num}</span>
+                    <span class="den">${frac.den}</span>
+                </span>
+            `;
+        }
+
+        resEl.innerHTML = `
+            ${fractionHtml}
+            <span class="decimal-preview">≈ ${frac.toDecimalString()}</span>
+        `;
+    }
+
+    function calculate() {
+        if (!expression.trim()) return;
+        try {
+            const res = evaluateExpression(expression);
+            lastResult = res;
+            exprEl.textContent = expression + ' =';
+            renderResult(res);
+            expression = res.toPlainText();
+            openParens = 0;
+        } catch (err) {
+            resEl.innerHTML = `<span class="main-number" style="color:#dc2626; font-size:1.3rem;">${err.message || 'Ungültige Eingabe'}</span>`;
+        }
+    }
+
+    function invertFraction() {
+        calculate();
+        if (lastResult && lastResult.num !== 0n) {
+            lastResult = new Fraction(lastResult.den, lastResult.num);
+            expression = lastResult.toPlainText();
+            exprEl.textContent = 'Kehrwert';
+            renderResult(lastResult);
+        }
+    }
+
+    function squareFraction() {
+        calculate();
+        if (lastResult) {
+            lastResult = lastResult.mul(lastResult);
+            expression = lastResult.toPlainText();
+            exprEl.textContent = 'Quadrat';
+            renderResult(lastResult);
+        }
+    }
+
+    function copyResult() {
+        if (!lastResult) return;
+        const text = `${lastResult.toPlainText()} (${lastResult.toDecimalString()})`;
+        navigator.clipboard.writeText(text);
+
+        const btn = document.getElementById('copy-res-btn');
+        const orig = btn.textContent;
+        btn.textContent = 'Kopiert ✓';
+        btn.style.backgroundColor = '#10b981';
+        btn.style.color = '#ffffff';
+        setTimeout(() => {
+            btn.textContent = orig;
+            btn.style.backgroundColor = '';
+            btn.style.color = '';
+        }, 1800);
+    }
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key >= '0' && e.key <= '9') appendToken(e.key);
+        else if (e.key === ',' || e.key === '.') appendToken(',');
+        else if (e.key === '+') appendToken(' + ');
+        else if (e.key === '-') appendToken(' - ');
+        else if (e.key === '*') appendToken(' × ');
+        else if (e.key === '/') { e.preventDefault(); appendToken('/'); }
+        else if (e.key === ' ') { e.preventDefault(); appendToken(' '); }
+        else if (e.key === '(' || e.key === ')') appendToken(e.key);
+        else if (e.key === 'Enter' || e.key === '=') { e.preventDefault(); calculate(); }
+        else if (e.key === 'Backspace') backspace();
+        else if (e.key === 'Escape') clearAll();
+    });
+</script>
+
+</body>
+</html>
